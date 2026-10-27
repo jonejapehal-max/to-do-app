@@ -26,8 +26,7 @@
   <ul id="list"></ul>
 
   <script>
-    // Change this to your Render / PythonAnywhere URL after deploying (no trailing slash)
-    const API_URL = "http://127.0.0.1:5000";
+    const API_URL = "https://to-do-app-msoa.onrender.com";
 
     const list = document.getElementById("list");
     const errorBox = document.getElementById("error");
@@ -51,7 +50,7 @@
     });
 
     async function loadItems() {
-      const items = await api("/items");   // GET
+      const items = await api("/items");
       list.innerHTML = "";
       items.forEach(renderItem);
     }
@@ -64,17 +63,17 @@
       box.type = "checkbox";
       box.checked = item.done;
       box.onchange = async () => {
-        await api("/items/" + item.id, jsonOptions("PUT", { done: box.checked })); // PUT
+        await api("/items/" + item.id, jsonOptions("PUT", { done: box.checked }));
         loadItems();
       };
 
       const text = document.createElement("span");
-      text.textContent = item.title;   // textContent avoids HTML injection
+      text.textContent = item.title;
 
       const del = document.createElement("button");
       del.textContent = "Delete";
       del.onclick = async () => {
-        await api("/items/" + item.id, { method: "DELETE" });  // DELETE
+        await api("/items/" + item.id, { method: "DELETE" });
         loadItems();
       };
 
@@ -85,7 +84,7 @@
     document.getElementById("add-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const input = document.getElementById("title");
-      await api("/items", jsonOptions("POST", { title: input.value }));  // POST
+      await api("/items", jsonOptions("POST", { title: input.value }));
       input.value = "";
       loadItems();
     });
